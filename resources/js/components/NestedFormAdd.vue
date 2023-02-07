@@ -1,11 +1,12 @@
 <template>
-  <Icon
-    type="plus-circle"
-    class="cursor-pointer"
-    v-if="field.max === 0 || field.children.length < field.max"
-    hover-color="success"
-    @click="addChild"
-  />
+  <a class="font-bold text-2xl cursor-pointer hover:text-primary-400" @click="addChild">
+    Add
+    <Icon
+      type="plus-circle"
+      v-if="field.max === 0 || field.children.length < field.max"
+      hover-color="success"
+    />
+  </a>
 </template>
 
 <script>
@@ -45,6 +46,14 @@ export default {
       }
       this.field.schema.key = maxKey + 1;
       this.field.children.push(this.replaceIndexesInSchema(this.field));
+
+      this.field.children.forEach(function(children){
+        if(children.key !== maxKey + 1){
+          children.opened = false;
+        } else {
+          children.opened = true;
+        }
+      })
     },
 
     /**

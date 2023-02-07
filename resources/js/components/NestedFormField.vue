@@ -12,7 +12,7 @@
     </help-text>
 
     <template v-if="shouldDisplay()">
-      <div class="p-1 flex items-center justify-center w-100 add-form">
+      <div class="p-1 mb-1 flex items-center justify-center w-100 add-form">
         <nested-form-add :field="field" />
       </div>
 
@@ -23,14 +23,15 @@
           :class="{ 'overflow-hidden': field.panel && !index, blah: true }"
           v-bind:style="getStyle(childIndex)"
         >
-          <div class="flex gap-1 items-center w-full">
+          <div class="flex gap-1 items-center w-full border-b">
             <nested-form-header
               :child="child"
               :field="field"
-              class="grow"
+              class="grow cursor-pointer"
               :style="{ width: '97%' }"
+              @click="closeOthers(child);"
             />
-            <div class="cursor-pointer" @click="child.opened = !child.opened">
+            <div class="cursor-pointer" @click="closeOthers(child);">
               <div class="opener p-1">
                 <Icon
                   class="cursor-pointer"
@@ -158,6 +159,17 @@ export default {
      */
     handleChange(value) {
       this.value = value;
+    },
+
+    closeOthers(child){
+      child.opened = !child.opened;
+      if(child.opened){
+        this.field.children.forEach(function(children){
+          if(children.key !== child.key){
+            children.opened = false;
+          }
+        })
+      }
     },
 
     /**

@@ -13,7 +13,7 @@
     <div v-if="heading" v-html="heading" />
     <div class="flex">
       <nested-form-view :child="child" class="mx-2" />
-      <nested-form-remove :child="child" :field="field" class="mx-2" />
+      <nested-form-remove :child="child" :field="field" class="mx-2 text-red-600 hover:text-red-400" />
     </div>
   </div>
 </template>
